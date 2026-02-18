@@ -34,7 +34,7 @@ const Profile = ({ navigation }) => {
         <Text style={[styles.text, { color: textColor }]}>Profile Screen</Text>
 
         <Button
-          title="Go To About"
+          title="Go To Setting"
           onPress={() => navigation.navigate("About")}
         />
       </View>

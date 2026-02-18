@@ -6,6 +6,7 @@ import { useColorScheme } from "react-native";
 import Icon from "react-native-vector-icons/AntDesign";
 import Home from "./src/Screens/Home";
 import Profile from "./src/Screens/Profile";
+import Setting from "./src/Screens/Setting";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -43,11 +44,11 @@ function TabNavigator() {
       />
 
       <Tab.Screen
-        name="Settings"
-        component={Settings}
+        name="Setting"
+        component={Setting}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <Icon name="Settings" size={size} color={color} />
+            <Icon name="setting" size={size} color={color} />
           ),
         }}
       />
