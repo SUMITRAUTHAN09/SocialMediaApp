@@ -1,44 +1,61 @@
-import React from 'react';
+import React, { useState } from "react";
 import {
   Button,
+  Image,
+  Pressable,
   SafeAreaView,
   StyleSheet,
   Text,
   View,
   useColorScheme,
-} from 'react-native';
+} from "react-native";
+import { demoData } from "./Home";
 
 const Profile = ({ navigation }) => {
   const theme = useColorScheme();
-  const isDarkMode = theme == 'Dark';
-  const textColor = isDarkMode ? 'black' : 'white';
-  const backgroundColor = isDarkMode ? 'white' : 'black';
+  const isDarkMode = theme === "dark";
+
+  const textColor = isDarkMode ? "white" : "black";
+  const backgroundColor = isDarkMode ? "black" : "white";
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const switchIDs = () => {
+    if (currentIndex < demoData.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+    } else {
+      setCurrentIndex(0); // restart from first profile
+    }
+  };
 
   return (
     <SafeAreaView style={{ backgroundColor: backgroundColor, flex: 1 }}>
       <View style={styles.container}>
-        <Text style={styles.text}>Profile Screen</Text>
+        <Text style={[styles.text, { color: textColor }]}>Profile Screen</Text>
 
         <Button
           title="Go To About"
-          onPress={() => navigation.navigate('About')}
-          style={{ fontFamily: 'serif' }}
+          onPress={() => navigation.navigate("About")}
         />
       </View>
-      <View
-        style={{
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <View style={styles.profileCon}></View>
-        <Text style={[styles.text, { fontFamily: 'serif', color: textColor }]}>
-          Danious
-        </Text>
+
+      {/* Showing only current selected profile */}
+      <View style={styles.card}>
+        <Image
+          src={demoData[currentIndex].image}
+          style={[styles.img, { borderColor: isDarkMode ? "white" : "black" }]}
+        />
         <Text style={[styles.text, { color: textColor }]}>
-          Discription: This page is for profile section and this is the demo
-          model of the First app
+          {demoData[currentIndex].name}
         </Text>
+
+        <Text style={[styles.text, { color: textColor }]}>
+          {demoData[currentIndex].description}
+        </Text>
+
+        <Pressable onPress={switchIDs} style={styles.button}>
+          <Text style={{ color: "white" }}>Press To See Profile's</Text>
+        </Pressable>
       </View>
     </SafeAreaView>
   );
@@ -48,17 +65,33 @@ export default Profile;
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
     padding: 10,
   },
-  text: { fontSize: 20, marginBottom: 10, fontFamily: 'serif' },
-  profileCon: {
-    width: 200,
-    height: 200,
+  text: {
+    fontSize: 20,
+    marginBottom: 10,
+  },
+  card: {
+    margin: 20,
+    padding: 20,
+    borderWidth: 1,
+    borderRadius: 10,
+  },
+  button: {
+    marginTop: 15,
+    backgroundColor: "blue",
+    padding: 10,
+    borderRadius: 5,
+    alignItems: "center",
+  },
+  img: {
+    width: "full",
+    height: 300,
     borderWidth: 2,
-    borderColor: 'red',
-    borderRadius: 100,
+    borderBottomColor: "red",
+    borderRadius: 30,
   },
 });
